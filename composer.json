@@ -1,5 +1,5 @@
 {
-	"name": "voip/voip-php-sdk",
+	"name": "voipplatform/voip-php-sdk",
 	"description": "sdk for voip developers",
 	"keywords": ["voipsdk", "composer", "voip", "sdk"],
 	"license": "Apache-2.0",
