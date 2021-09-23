@@ -1,0 +1,21 @@
+{
+    "name": "voip/sdk",
+    "description": "sdk for voip developers",
+    "keywords": ["voipsdk", "composer", "voip", "sdk"],
+    "license": "VOIP Platform",
+    "authors": [
+        {
+            "name": "voipsdkplatform",
+            "email": "me@handesk.xyz"
+        }
+    ],
+    "type": "project",
+    "require": {
+		"php": ">=5.4"
+    },
+	"autoload": {
+        "psr-4": {
+            "voip\\": "src/"
+        }
+    }
+}
