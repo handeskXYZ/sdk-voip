@@ -2,7 +2,7 @@
     "name": "voip/voip-php-sdk",
     "description": "sdk for voip developers",
     "keywords": ["voipsdk", "composer", "voip", "sdk"],
-    "license": "VOIP Platform",
+    "license": "MIT",
     "authors": [
         {
             "name": "VOIP platform",
