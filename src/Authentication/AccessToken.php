@@ -1,15 +1,15 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Authentication;
+namespace Voip\Authentication;
 
 /**
  * Class AccessToken
  *
- * @package Zalo
+ * @package Voip
  */
 class AccessToken
 {

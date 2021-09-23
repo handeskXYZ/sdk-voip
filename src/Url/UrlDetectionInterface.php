@@ -1,15 +1,15 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Url;
+namespace Voip\Url;
 
 /**
  * Interface UrlDetectionInterface
  *
- * @package Zalo
+ * @package Voip
  */
 interface UrlDetectionInterface
 {

@@ -1,21 +1,21 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo;
+namespace Voip;
 
-use Zalo\Exceptions\ZaloSDKException;
-use Zalo\HttpClients\ZaloCurlHttpClient;
-use Zalo\HttpClients\ZaloHttpClientInterface;
+use Voip\Exceptions\VoipSDKException;
+use Voip\HttpClients\VoipCurlHttpClient;
+use Voip\HttpClients\VoipHttpClientInterface;
 
 /**
- * Class ZaloClient
+ * Class VoipClient
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloClient {
+class VoipClient {
 
     /**
      * @const int The timeout in seconds for a normal request.
@@ -28,7 +28,7 @@ class ZaloClient {
     protected $enableBetaMode = false;
 
     /**
-     * @var ZaloHttpClientInterface HTTP client handler.
+     * @var VoipHttpClientInterface HTTP client handler.
      */
     protected $httpClientHandler;
 
@@ -38,12 +38,12 @@ class ZaloClient {
     public static $requestCount = 0;
 
     /**
-     * Instantiates a new ZaloClient object.
+     * Instantiates a new VoipClient object.
      *
-     * @param ZaloHttpClientInterface|null $httpClientHandler
+     * @param VoipHttpClientInterface|null $httpClientHandler
      * @param boolean                          $enableBeta
      */
-    public function __construct(ZaloHttpClientInterface $httpClientHandler = null, $enableBeta = false) {
+    public function __construct(VoipHttpClientInterface $httpClientHandler = null, $enableBeta = false) {
         $this->httpClientHandler = $httpClientHandler ? : $this->detectHttpClientHandler();
         $this->enableBetaMode = $enableBeta;
     }
@@ -51,16 +51,16 @@ class ZaloClient {
     /**
      * Sets the HTTP client handler.
      *
-     * @param ZaloHttpClientInterface $httpClientHandler
+     * @param VoipHttpClientInterface $httpClientHandler
      */
-    public function setHttpClientHandler(ZaloHttpClientInterface $httpClientHandler) {
+    public function setHttpClientHandler(VoipHttpClientInterface $httpClientHandler) {
         $this->httpClientHandler = $httpClientHandler;
     }
 
     /**
      * Returns the HTTP client handler.
      *
-     * @return ZaloHttpClientInterface
+     * @return VoipHttpClientInterface
      */
     public function getHttpClientHandler() {
         return $this->httpClientHandler;
@@ -69,10 +69,10 @@ class ZaloClient {
     /**
      * Detects which HTTP client handler to use.
      *
-     * @return ZaloHttpClientInterface
+     * @return VoipHttpClientInterface
      */
     public function detectHttpClientHandler() {
-        return new ZaloCurlHttpClient();
+        return new VoipCurlHttpClient();
     }
 
     /**
@@ -87,11 +87,11 @@ class ZaloClient {
     /**
      * Prepares the request for sending to the client handler.
      *
-     * @param ZaloRequest $request
+     * @param VoipRequest $request
      *
      * @return array
      */
-    public function prepareRequestMessage(ZaloRequest $request) {
+    public function prepareRequestMessage(VoipRequest $request) {
         $url = $request->getUrl();
         // If we're sending files they should be sent as multipart/form-data
         if ($request->containsFileUploads()) {
@@ -121,25 +121,25 @@ class ZaloClient {
     /**
      * Makes the request to  and returns the result.
      *
-     * @param ZaloRequest $request
+     * @param VoipRequest $request
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
-    public function sendRequest(ZaloRequest $request) {
+    public function sendRequest(VoipRequest $request) {
         $request->validateAccessToken();
 
         list($url, $method, $headers, $body) = $this->prepareRequestMessage($request);
         // Since file uploads can take a while, we need to give more time for uploads
         $timeOut = static::DEFAULT_REQUEST_TIMEOUT;
 
-        // Should throw `ZaloSDKException` exception on HTTP client error.
+        // Should throw `VoipSDKException` exception on HTTP client error.
         // Don't catch to allow it to bubble up.
         $rawResponse = $this->httpClientHandler->send($url, $method, $body, $headers, $timeOut);
         static::$requestCount++;
 
-        $returnResponse = new ZaloResponse(
+        $returnResponse = new VoipResponse(
                 $request, $rawResponse->getBody(), $rawResponse->getHttpResponseCode(), $rawResponse->getHeaders()
         );
 
@@ -153,24 +153,24 @@ class ZaloClient {
     /**
      * Makes the upload request to  and returns the result.
      *
-     * @param ZaloRequest $request
+     * @param VoipRequest $request
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
-    public function sendRequestUploadVideo(ZaloRequest $request) {
+    public function sendRequestUploadVideo(VoipRequest $request) {
 
         list($url, $method, $headers, $body) = $this->prepareUploadVideoRequestMessage($request);
         // Since file uploads can take a while, we need to give more time for uploads
         $timeOut = static::DEFAULT_REQUEST_TIMEOUT;
 
-        // Should throw `ZaloSDKException` exception on HTTP client error.
+        // Should throw `VoipSDKException` exception on HTTP client error.
         // Don't catch to allow it to bubble up.
         $rawResponse = $this->httpClientHandler->send($url, $method, $body, $headers, $timeOut);
         static::$requestCount++;
 
-        $returnResponse = new ZaloResponse(
+        $returnResponse = new VoipResponse(
                 $request, $rawResponse->getBody(), $rawResponse->getHttpResponseCode(), $rawResponse->getHeaders()
         );
 
@@ -184,11 +184,11 @@ class ZaloClient {
     /**
      * Prepares the request for sending to the client handler.
      *
-     * @param ZaloRequest $request
+     * @param VoipRequest $request
      *
      * @return array
      */
-    public function prepareUploadVideoRequestMessage(ZaloRequest $request) {
+    public function prepareUploadVideoRequestMessage(VoipRequest $request) {
         // If we're sending files they should be sent as multipart/form-data
         $requestBody = $request->getMultipartBody();
         $request->setHeaders([

@@ -1,19 +1,19 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\FileUpload;
+namespace Voip\FileUpload;
 
-use Zalo\Exceptions\ZaloSDKException;
+use Voip\Exceptions\VoipSDKException;
 
 /**
- * Class ZaloFile
+ * Class VoipFile
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloFile
+class VoipFile
 {
     /**
      * @var string The path to the file on the system.
@@ -36,13 +36,13 @@ class ZaloFile
     protected $stream;
 
     /**
-     * Creates a new ZaloFile entity.
+     * Creates a new VoipFile entity.
      *
      * @param string $filePath
      * @param int $maxLength
      * @param int $offset
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function __construct($filePath, $maxLength = -1, $offset = -1)
     {
@@ -63,18 +63,18 @@ class ZaloFile
     /**
      * Opens a stream for the file.
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function open()
     {
         if (!$this->isRemoteFile($this->path) && !is_readable($this->path)) {
-            throw new ZaloSDKException('Failed to create ZaloFile entity. Unable to read resource: ' . $this->path . '.');
+            throw new VoipSDKException('Failed to create VoipFile entity. Unable to read resource: ' . $this->path . '.');
         }
 
         $this->stream = fopen($this->path, 'r');
 
         if (!$this->stream) {
-            throw new ZaloSDKException('Failed to create ZaloFile entity. Unable to open resource: ' . $this->path . '.');
+            throw new VoipSDKException('Failed to create VoipFile entity. Unable to open resource: ' . $this->path . '.');
         }
     }
 

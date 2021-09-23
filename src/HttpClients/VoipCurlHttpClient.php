@@ -1,22 +1,22 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\HttpClients;
+namespace Voip\HttpClients;
 
-use Zalo\Http\GraphRawResponse;
-use Zalo\Exceptions\ZaloSDKException;
-use Zalo\HttpClients\ZaloCurl;
-use Zalo\HttpClients\ZaloHttpClientInterface;
+use Voip\Http\GraphRawResponse;
+use Voip\Exceptions\VoipSDKException;
+use Voip\HttpClients\VoipCurl;
+use Voip\HttpClients\VoipHttpClientInterface;
 
 /**
- * Class ZaloCurlHttpClient
+ * Class VoipCurlHttpClient
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloCurlHttpClient implements ZaloHttpClientInterface
+class VoipCurlHttpClient implements VoipHttpClientInterface
 {
     /**
      * @var string The client error message
@@ -34,16 +34,16 @@ class ZaloCurlHttpClient implements ZaloHttpClientInterface
     protected $rawResponse;
 
     /**
-     * @var ZaloCurl Procedural curl as object
+     * @var VoipCurl Procedural curl as object
      */
-    protected $zaloCurl;
+    protected $VoipCurl;
 
     /**
-     * @param ZaloCurl|null Procedural curl as object
+     * @param VoipCurl|null Procedural curl as object
      */
-    public function __construct(ZaloCurl $zaloCurl = null)
+    public function __construct(VoipCurl $VoipCurl = null)
     {
-        $this->zaloCurl = $zaloCurl ?: new ZaloCurl();
+        $this->VoipCurl = $VoipCurl ?: new VoipCurl();
     }
 
     /**
@@ -54,8 +54,8 @@ class ZaloCurlHttpClient implements ZaloHttpClientInterface
         $this->openConnection($url, $method, $body, $headers, $timeOut);
         $this->sendRequest();
 
-        if ($curlErrorCode = $this->zaloCurl->errno()) {
-            throw new ZaloSDKException($this->zaloCurl->error(), $curlErrorCode);
+        if ($curlErrorCode = $this->VoipCurl->errno()) {
+            throw new VoipSDKException($this->VoipCurl->error(), $curlErrorCode);
         }
 
         // Separate the raw headers from the raw body
@@ -92,8 +92,8 @@ class ZaloCurlHttpClient implements ZaloHttpClientInterface
         if ($method !== "GET") {
             $options[CURLOPT_POSTFIELDS] = $body;
         }
-        $this->zaloCurl->init();
-        $this->zaloCurl->setoptArray($options);
+        $this->VoipCurl->init();
+        $this->VoipCurl->setoptArray($options);
     }
 
     /**
@@ -101,7 +101,7 @@ class ZaloCurlHttpClient implements ZaloHttpClientInterface
      */
     public function closeConnection()
     {
-        $this->zaloCurl->close();
+        $this->VoipCurl->close();
     }
 
     /**
@@ -109,7 +109,7 @@ class ZaloCurlHttpClient implements ZaloHttpClientInterface
      */
     public function sendRequest()
     {
-        $this->rawResponse = $this->zaloCurl->exec();
+        $this->rawResponse = $this->VoipCurl->exec();
     }
 
     /**

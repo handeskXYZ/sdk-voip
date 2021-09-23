@@ -1,15 +1,15 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Http;
+namespace Voip\Http;
 
 /**
  * Class GraphRawResponse
  *
- * @package Zalo
+ * @package Voip
  */
 class GraphRawResponse
 {

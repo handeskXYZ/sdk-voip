@@ -1,17 +1,17 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Url;
+namespace Voip\Url;
 
 /**
- * Class ZaloUrlManipulator
+ * Class VoipUrlManipulator
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloUrlManipulator
+class VoipUrlManipulator
 {
     /**
      * Remove params from a URL.
@@ -145,6 +145,6 @@ class ZaloUrlManipulator
      */
     public static function baseGraphUrlEndpoint($urlToTrim)
     {
-        return '/' . preg_replace('/^https:\/\/.+\.zalo\.me(\/v.+?)?\//', '', $urlToTrim);
+        return '/' . preg_replace('/^https:\/\/.+\.Voip\.me(\/v.+?)?\//', '', $urlToTrim);
     }
 }

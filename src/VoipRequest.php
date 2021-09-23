@@ -1,25 +1,25 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo;
+namespace Voip;
 
-use Zalo\Authentication\AccessToken;
-use Zalo\Url\ZaloUrlManipulator;
-use Zalo\Http\RequestBodyUrlEncoded;
-use Zalo\Http\RequestBodyRaw;
-use Zalo\Http\RequestBodyMultipart;
-use Zalo\Exceptions\ZaloSDKException;
-use Zalo\FileUpload\ZaloFile;
+use Voip\Authentication\AccessToken;
+use Voip\Url\VoipUrlManipulator;
+use Voip\Http\RequestBodyUrlEncoded;
+use Voip\Http\RequestBodyRaw;
+use Voip\Http\RequestBodyMultipart;
+use Voip\Exceptions\VoipSDKException;
+use Voip\FileUpload\VoipFile;
 
 /**
  * Class Request
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloRequest
+class VoipRequest
 {
     /**
      * @var string|null The access token to use for this request.
@@ -79,7 +79,7 @@ class ZaloRequest
      *
      * @param AccessToken|string|null
      *
-     * @return ZaloRequest
+     * @return VoipRequest
      */
     public function setAccessToken($accessToken)
     {
@@ -95,9 +95,9 @@ class ZaloRequest
      *
      * @param string $accessToken The access token.
      *
-     * @return ZaloRequest
+     * @return VoipRequest
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function setAccessTokenFromParams($accessToken)
     {
@@ -105,7 +105,7 @@ class ZaloRequest
         if (!$existingAccessToken) {
             $this->setAccessToken($accessToken);
         } elseif ($accessToken !== $existingAccessToken) {
-            throw new ZaloSDKException('Access token mismatch. The access token provided in the ZaloRequest and the one provided in the URL or POST params do not match.');
+            throw new VoipSDKException('Access token mismatch. The access token provided in the VoipRequest and the one provided in the URL or POST params do not match.');
         }
 
         return $this;
@@ -148,13 +148,13 @@ class ZaloRequest
     /**
      * Validate that an access token exists for this request.
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function validateAccessToken()
     {
         $accessToken = $this->getAccessToken();
         if (!$accessToken) {
-            throw new ZaloSDKException('You must provide an access token.');
+            throw new VoipSDKException('You must provide an access token.');
         }
     }
 
@@ -181,16 +181,16 @@ class ZaloRequest
     /**
      * Validate that the HTTP method is set.
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function validateMethod()
     {
         if (!$this->method) {
-            throw new ZaloSDKException('HTTP method not specified.');
+            throw new VoipSDKException('HTTP method not specified.');
         }
 
         if (!in_array($this->method, ['GET', 'POST'])) {
-            throw new ZaloSDKException('Invalid HTTP method specified.');
+            throw new VoipSDKException('Invalid HTTP method specified.');
         }
     }
 
@@ -199,21 +199,21 @@ class ZaloRequest
      *
      * @param string
      *
-     * @return ZaloRequest
+     * @return VoipRequest
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function setUrl($url)
     {
         // Harvest the access token from the url to keep things in sync
-        $params = ZaloUrlManipulator::getParamsAsArray($url);
+        $params = VoipUrlManipulator::getParamsAsArray($url);
         if (isset($params['access_token'])) {
             $this->setAccessTokenFromParams($params['access_token']);
         }
 
         // Clean the token & app secret proof from the url.
         $filterParams = ['access_token', 'appsecret_proof'];
-        $this->url = ZaloUrlManipulator::removeParamsFromUrl($url, $filterParams);
+        $this->url = VoipUrlManipulator::removeParamsFromUrl($url, $filterParams);
         return $this;
     }
 
@@ -258,9 +258,9 @@ class ZaloRequest
      *
      * @param array $params
      *
-     * @return ZaloRequest
+     * @return VoipRequest
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function setParams(array $params = [])
     {
@@ -283,7 +283,7 @@ class ZaloRequest
      *
      * @param array $params
      *
-     * @return ZaloRequest
+     * @return VoipRequest
      */
     public function dangerouslySetParams(array $params = [])
     {
@@ -304,7 +304,7 @@ class ZaloRequest
     public function sanitizeFileParams(array $params)
     {
         foreach ($params as $key => $value) {
-            if ($value instanceof ZaloFile) {
+            if ($value instanceof VoipFile) {
                 $this->addFile($key, $value);
                 unset($params[$key]);
             }
@@ -316,9 +316,9 @@ class ZaloRequest
      * Add a file to be uploaded.
      *
      * @param string       $key
-     * @param ZaloFile $file
+     * @param VoipFile $file
      */
-    public function addFile($key, ZaloFile $file)
+    public function addFile($key, VoipFile $file)
     {
         $this->files[$key] = $file;
     }
@@ -422,14 +422,14 @@ class ZaloRequest
         $url = $this->url;
         if ($this->getMethod() !== 'POST') {
             $params = $this->getParams();
-            $url = ZaloUrlManipulator::appendParamsToUrl($url, $params);
+            $url = VoipUrlManipulator::appendParamsToUrl($url, $params);
         } else {
             $params = $this->getParams();
             $p = ["access_token" => $this->getAccessToken()];
-            $url = ZaloUrlManipulator::appendParamsToUrl($url, $p);
+            $url = VoipUrlManipulator::appendParamsToUrl($url, $p);
             foreach ($params as $key => $value) {
                 if ($key === 'upload_type') {
-                    $url = ZaloUrlManipulator::appendParamsToUrl($url, [$key => $value]);
+                    $url = VoipUrlManipulator::appendParamsToUrl($url, [$key => $value]);
                 }
             }
             $url = urldecode($url);
@@ -445,7 +445,7 @@ class ZaloRequest
     public static function getDefaultHeaders()
     {
         return [
-            'SDK-Source' => 'ZALO-PHP-SDK-v' . Zalo::VERSION,
+            'SDK-Source' => 'Voip-PHP-SDK-v' . Voip::VERSION,
             'Accept-Encoding' => '*',
         ];
     }

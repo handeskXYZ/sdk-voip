@@ -1,25 +1,25 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Authentication;
+namespace Voip\Authentication;
 
-use Zalo\Authentication\AccessToken;
-use Zalo\Authentication\OAuth2Client;
-use Zalo\Exceptions\ZaloSDKException;
-use Zalo\Url\ZaloUrlDetectionHandler;
-use Zalo\Url\ZaloUrlManipulator;
-use Zalo\Url\UrlDetectionInterface;
+use Voip\Authentication\AccessToken;
+use Voip\Authentication\OAuth2Client;
+use Voip\Exceptions\VoipSDKException;
+use Voip\Url\VoipUrlDetectionHandler;
+use Voip\Url\VoipUrlManipulator;
+use Voip\Url\UrlDetectionInterface;
 
 
 /**
- * Class ZaloRedirectLoginHelper
+ * Class VoipRedirectLoginHelper
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloRedirectLoginHelper
+class VoipRedirectLoginHelper
 {
     /**
      * @const int The length of CSRF string to validate the login link.
@@ -45,7 +45,7 @@ class ZaloRedirectLoginHelper
     public function __construct(OAuth2Client $oAuth2Client, UrlDetectionInterface $urlHandler = null)
     {
         $this->oAuth2Client = $oAuth2Client;
-        $this->urlDetectionHandler = $urlHandler ?: new ZaloUrlDetectionHandler();
+        $this->urlDetectionHandler = $urlHandler ?: new VoipUrlDetectionHandler();
     }
 
     /**
@@ -59,9 +59,9 @@ class ZaloRedirectLoginHelper
     }
 
     /**
-     * Stores CSRF state and returns a URL to which the user should be sent to in order to continue the login process with Zalo.
+     * Stores CSRF state and returns a URL to which the user should be sent to in order to continue the login process with Voip.
      *
-     * @param string $redirectUrl The URL Zalo should redirect users to after login.
+     * @param string $redirectUrl The URL Voip should redirect users to after login.
      * @param array  $scope       List of permissions to request during login.
      * @param array  $params      An array of parameters to generate URL.
      * @param string $separator   The separator to use in http_build_query().
@@ -79,9 +79,9 @@ class ZaloRedirectLoginHelper
     }
 
     /**
-     * Returns the URL to send the user in order to login to Zalo.
+     * Returns the URL to send the user in order to login to Voip.
      *
-     * @param string $redirectUrl The URL Zalo should redirect users to after login.
+     * @param string $redirectUrl The URL Voip should redirect users to after login.
      * @param array  $scope       List of permissions to request during login.
      * @param string $separator   The separator to use in http_build_query().
      *
@@ -98,9 +98,9 @@ class ZaloRedirectLoginHelper
     }
 
     /**
-     * Returns the URL to send the user in order to login to Zalo with permission(s) to be re-asked.
+     * Returns the URL to send the user in order to login to Voip with permission(s) to be re-asked.
      *
-     * @param string $redirectUrl The URL Zalo should redirect users to after login.
+     * @param string $redirectUrl The URL Voip should redirect users to after login.
      * @param array  $scope       List of permissions to request during login.
      * @param string $separator   The separator to use in http_build_query().
      *
@@ -114,9 +114,9 @@ class ZaloRedirectLoginHelper
     }
 
     /**
-     * Returns the URL to send the user in order to login to Zalo with user to be re-authenticated.
+     * Returns the URL to send the user in order to login to Voip with user to be re-authenticated.
      *
-     * @param string $redirectUrl The URL Zalo should redirect users to after login.
+     * @param string $redirectUrl The URL Voip should redirect users to after login.
      * @param array  $scope       List of permissions to request during login.
      * @param string $separator   The separator to use in http_build_query().
      *
@@ -136,7 +136,7 @@ class ZaloRedirectLoginHelper
      *
      * @return AccessToken|null
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function getAccessToken($redirectUrl = null)
     {
@@ -146,7 +146,7 @@ class ZaloRedirectLoginHelper
         
         $redirectUrl = $redirectUrl ?: $this->urlDetectionHandler->getCurrentUrl();
         // At minimum we need to remove the state param
-        $redirectUrl = ZaloUrlManipulator::removeParamsFromUrl($redirectUrl, ['state']);
+        $redirectUrl = VoipUrlManipulator::removeParamsFromUrl($redirectUrl, ['state']);
 
         return $this->oAuth2Client->getAccessTokenFromCode($code, $redirectUrl);
     }

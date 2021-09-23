@@ -1,19 +1,19 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Http;
+namespace Voip\Http;
 
-use Zalo\FileUpload\ZaloFile;
+use Voip\FileUpload\VoipFile;
 
 /**
  * Class RequestBodyMultipartt
  *
  * Some things copied from Guzzle
  *
- * @package Zalo
+ * @package Voip
  * 
  */
 class RequestBodyMultipart implements RequestBodyInterface
@@ -83,11 +83,11 @@ class RequestBodyMultipart implements RequestBodyInterface
      * Get the string needed to transfer a file.
      *
      * @param string       $name
-     * @param ZaloFile $file
+     * @param VoipFile $file
      *
      * @return string
      */
-    private function getFileString($name, ZaloFile $file)
+    private function getFileString($name, VoipFile $file)
     {
         return sprintf(
             "--%s\r\nContent-Disposition: form-data; name=\"%s\"; filename=\"%s\"%s\r\n\r\n%s\r\n",
@@ -141,11 +141,11 @@ class RequestBodyMultipart implements RequestBodyInterface
     /**
      * Get the headers needed before transferring the content of a POST file.
      *
-     * @param ZaloFile $file
+     * @param VoipFile $file
      *
      * @return string
      */
-    protected function getFileHeaders(ZaloFile $file)
+    protected function getFileHeaders(VoipFile $file)
     {
         return "\r\nContent-Type: {$file->getMimetype()}";
     }

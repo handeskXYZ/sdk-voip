@@ -1,17 +1,17 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\HttpClients;
+namespace Voip\HttpClients;
 
 /**
- * Interface ZaloHttpClientInterface
+ * Interface VoipHttpClientInterface
  *
- * @package Zalo
+ * @package Voip
  */
-interface ZaloHttpClientInterface
+interface VoipHttpClientInterface
 {
     /**
      * Sends a request to the server and returns the raw response.
@@ -22,9 +22,9 @@ interface ZaloHttpClientInterface
      * @param array  $headers The request headers.
      * @param int    $timeOut The timeout in seconds for the request.
      *
-     * @return \Zalo\Http\GraphRawResponse Raw response from the server.
+     * @return \Voip\Http\GraphRawResponse Raw response from the server.
      *
-     * @throws \Zalo\Exceptions\ZaloSDKException
+     * @throws \Voip\Exceptions\VoipSDKException
      */
     public function send($url, $method, $body, array $headers, $timeOut);
 }

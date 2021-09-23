@@ -1,21 +1,21 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo;
+namespace Voip;
 
-use Zalo\Exceptions\ZaloResponseException;
-use Zalo\Exceptions\ZaloSDKException;
+use Voip\Exceptions\VoipResponseException;
+use Voip\Exceptions\VoipSDKException;
 
 
 /**
- * Class ZaloResponse
+ * Class VoipResponse
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloResponse
+class VoipResponse
 {
     /**
      * @var int The HTTP status code response from Graph.
@@ -38,24 +38,24 @@ class ZaloResponse
     protected $decodedBody = [];
 
     /**
-     * @var ZaloRequest The original request that returned this response.
+     * @var VoipRequest The original request that returned this response.
      */
     protected $request;
 
     /**
-     * @var ZaloSDKException The exception thrown by this request.
+     * @var VoipSDKException The exception thrown by this request.
      */
     protected $thrownException;
 
     /**
      * Creates a new Response entity.
      *
-     * @param ZaloRequest $request
+     * @param VoipRequest $request
      * @param string|null     $body
      * @param int|null        $httpStatusCode
      * @param array|null      $headers
      */
-    public function __construct(ZaloRequest $request, $body = null, $httpStatusCode = null, array $headers = [])
+    public function __construct(VoipRequest $request, $body = null, $httpStatusCode = null, array $headers = [])
     {
         $this->request = $request;
         $this->body = $body;
@@ -68,7 +68,7 @@ class ZaloResponse
     /**
      * Return the original request that returned this response.
      *
-     * @return ZaloRequest
+     * @return VoipRequest
      */
     public function getRequest()
     {
@@ -76,9 +76,9 @@ class ZaloResponse
     }
 
     /**
-     * Return the ZaloApp entity used for this response.
+     * Return the VoipApp entity used for this response.
      *
-     * @return ZaloApp
+     * @return VoipApp
      */
     public function getApp()
     {
@@ -168,7 +168,7 @@ class ZaloResponse
     /**
      * Throws the exception.
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function throwException()
     {
@@ -180,13 +180,13 @@ class ZaloResponse
      */
     public function makeException()
     {
-        $this->thrownException = ZaloResponseException::create($this);
+        $this->thrownException = VoipResponseException::create($this);
     }
 
     /**
      * Returns the exception that was thrown for this request.
      *
-     * @return ZaloResponseException|null
+     * @return VoipResponseException|null
      */
     public function getThrownException()
     {

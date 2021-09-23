@@ -1,15 +1,15 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Http;
+namespace Voip\Http;
 
 /**
  * Interface
  *
- * @package Zalo
+ * @package Voip
  */
 interface RequestBodyInterface
 {

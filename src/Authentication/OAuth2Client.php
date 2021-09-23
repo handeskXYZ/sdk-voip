@@ -1,32 +1,32 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Authentication;
+namespace Voip\Authentication;
 
-use Zalo\Authentication\AccessToken;
-use Zalo\Authentication\AccessTokenMetadata;
-use Zalo\Zalo;
-use Zalo\ZaloApp;
-use Zalo\ZaloRequest;
-use Zalo\ZaloResponse;
-use Zalo\ZaloClient;
-use Zalo\Exceptions\ZaloResponseException;
-use Zalo\Exceptions\ZaloSDKException;
+use Voip\Authentication\AccessToken;
+use Voip\Authentication\AccessTokenMetadata;
+use Voip\Voip;
+use Voip\VoipApp;
+use Voip\VoipRequest;
+use Voip\VoipResponse;
+use Voip\VoipClient;
+use Voip\Exceptions\VoipResponseException;
+use Voip\Exceptions\VoipSDKException;
 
 /**
  * Class OAuth2Client
  *
- * @package Zalo
+ * @package Voip
  */
 class OAuth2Client
 {
     /**
      * @const string The base authorization URL.
      */
-    const BASE_AUTHORIZATION_URL = 'https://oauth.zaloapp.com';
+    const BASE_AUTHORIZATION_URL = 'https://oauth.Voipapp.com';
 
     /**
      * @const string Default OAuth API version for requests.
@@ -34,42 +34,42 @@ class OAuth2Client
     const DEFAULT_OAUTH_VERSION = 'v3';
 
     /**
-     * The ZaloApp entity.
+     * The VoipApp entity.
      *
-     * @var ZaloApp
+     * @var VoipApp
      */
     protected $app;
 
     /**
-     * The Zalo client.
+     * The Voip client.
      *
-     * @var ZaloClient
+     * @var VoipClient
      */
     protected $client;
 
     /**
      * The last request sent to Graph.
      *
-     * @var ZaloRequest|null
+     * @var VoipRequest|null
      */
     protected $lastRequest;
 
     /**
-     * @param ZaloApp    $app
-     * @param ZaloClient $client
+     * @param VoipApp    $app
+     * @param VoipClient $client
      * @param string|null    $graphVersion The version of the Graph API to use.
      */
-    public function __construct(ZaloApp $app, ZaloClient $client)
+    public function __construct(VoipApp $app, VoipClient $client)
     {
         $this->app = $app;
         $this->client = $client;
     }
 
     /**
-     * Returns the last ZaloRequest that was sent.
+     * Returns the last VoipRequest that was sent.
      * Useful for debugging and testing.
      *
-     * @return ZaloRequest|null
+     * @return VoipRequest|null
      */
     public function getLastRequest()
     {
@@ -114,7 +114,7 @@ class OAuth2Client
      *
      * @return AccessToken
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function getAccessTokenFromCode($code, $redirectUri = '')
     {
@@ -133,7 +133,7 @@ class OAuth2Client
      *
      * @return AccessToken
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     protected function requestAnAccessToken(array $params)
     {
@@ -141,44 +141,25 @@ class OAuth2Client
         $data = $response->getDecodedBody();
 
         if (!isset($data['access_token'])) {
-            throw new ZaloSDKException('Access token was not returned from Graph.', 401);
+            throw new VoipSDKException('Access token was not returned from Graph.', 401);
         }
-
-        // Graph returns two different key names for expiration time
-        // on the same endpoint. Doh! :/
         $expiresAt = 0;
         if (isset($data['expires'])) {
-            // For exchanging a short lived token with a long lived token.
-            // The expiration time in seconds will be returned as "expires".
             $expiresAt = time() + $data['expires'];
         } elseif (isset($data['expires_in'])) {
-            // For exchanging a code for a short lived access token.
-            // The expiration time in seconds will be returned as "expires_in".
-            // See: https://developers.zalo.me/docs/
+            
             $expiresAt = time() + $data['expires_in'];
         }
 
         return new AccessToken($data['access_token'], $expiresAt);
     }
-
-    /**
-     * Send a request to Graph with an app access token.
-     *
-     * @param string                  $endpoint
-     * @param array                   $params
-     * @param AccessToken|string|null $accessToken
-     *
-     * @return ZaloResponse
-     *
-     * @throws ZaloResponseException
-     */
     protected function sendRequestWithClientParams($endpoint, array $params, $accessToken = null)
     {
         $params += $this->getClientParams();
 
         $accessToken = $accessToken ?: $this->app->getAccessToken();
         $url = static::BASE_AUTHORIZATION_URL . '/' . static::DEFAULT_OAUTH_VERSION . $endpoint;
-        $this->lastRequest = new ZaloRequest(
+        $this->lastRequest = new VoipRequest(
             $accessToken,
             'GET',
             $url,
@@ -188,12 +169,6 @@ class OAuth2Client
 
         return $this->client->sendRequest($this->lastRequest);
     }
-
-    /**
-     * Returns the client_* params for OAuth requests.
-     *
-     * @return array
-     */
     protected function getClientParams()
     {
         return [

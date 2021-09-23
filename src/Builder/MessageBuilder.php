@@ -1,17 +1,17 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Builder;
+namespace Voip\Builder;
 
-use Zalo\Exceptions\ZaloSDKException;
+use Voip\Exceptions\VoipSDKException;
 
 /**
  * Class MessageBuilder
  *
- * @package Zalo
+ * @package Voip
  */
 class MessageBuilder
 {
@@ -109,16 +109,16 @@ class MessageBuilder
      * 
      * @param string $msgTyoe
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function __construct($msgType)
     {
         if (!is_string($msgType)) {
             if (static::MSG_TYPE_TXT !== $msgType || static::MSG_TYPE_MEDIA !== $msgType || static::MSG_TYPE_LIST !== $msgType ||
                 static::MSG_TYPE_FILE !== $msgType || static::MSG_TYPE_TEMPLATE !== $msgType) {
-                    throw new ZaloSDKException('only support 5 message type text, media, list, template, file');
+                    throw new VoipSDKException('only support 5 message type text, media, list, template, file');
                 }
-                throw new ZaloSDKException('message type is empty! only support 5 message type text, media, list, template, file');
+                throw new VoipSDKException('message type is empty! only support 5 message type text, media, list, template, file');
         }
         $this->elementIndex = 0;
         $this->buttonIndex = 0;
@@ -136,12 +136,12 @@ class MessageBuilder
      * 
      * @param string $type
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function withMediaType($type)
     {
         if ('image' !== $type && 'gif' !== $type) {
-            throw new ZaloSDKException('media type only support type image, gif');
+            throw new VoipSDKException('media type only support type image, gif');
         }
         $this->data[static::MEDIA_TYPE] = $type;
     }
@@ -151,12 +151,12 @@ class MessageBuilder
      * 
      * @param string $type
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function withTemplateType($type)
     {
         if ('invite' !== $type) {
-            throw new ZaloSDKException('template type only support invite');
+            throw new VoipSDKException('template type only support invite');
         }
         $this->data[static::TEMPLATE_TYPE] = $type;
     }
@@ -363,7 +363,7 @@ class MessageBuilder
     public function withElement($title, $thumb, $description, $action)
     {
         if ($this->elementIndex >= static::MAX_ELEMENT) {
-            throw new ZaloSDKException('Only support 4 elements');
+            throw new VoipSDKException('Only support 4 elements');
         }
         $element = array(
             'title' => $title,
@@ -384,7 +384,7 @@ class MessageBuilder
     public function withButton($title, $action)
     {
         if ($this->buttonIndex >= static::MAX_ELEMENT) {
-            throw new ZaloSDKException('Only support 4 buttons');
+            throw new VoipSDKException('Only support 4 buttons');
         }
         if ($action['type'] == 'oa.open.url') {
             $url = $action['url'];

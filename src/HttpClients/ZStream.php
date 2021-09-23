@@ -1,20 +1,20 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\HttpClients;
+namespace Voip\HttpClients;
 
 /**
- * Class ZaloStream
+ * Class VoipStream
  *
  * Abstraction for the procedural stream elements so that the functions can be
  * mocked and the implementation can be tested.
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloStream
+class VoipStream
 {
     /**
      * @var resource Context stream resource instance

@@ -1,33 +1,33 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\HttpClients;
+namespace Voip\HttpClients;
 
-use Zalo\Http\GraphRawResponse;
-use Zalo\Exceptions\ZaloSDKException;
-use Zalo\HttpClients\ZaloHttpClientInterface;
+use Voip\Http\GraphRawResponse;
+use Voip\Exceptions\VoipSDKException;
+use Voip\HttpClients\VoipHttpClientInterface;
 
 /**
- * Class ZaloStreamHttpClient
+ * Class VoipStreamHttpClient
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloStreamHttpClient implements ZaloHttpClientInterface
+class VoipStreamHttpClient implements VoipHttpClientInterface
 {
     /**
-     * @var ZaloStream Procedural stream wrapper as object.
+     * @var VoipStream Procedural stream wrapper as object.
      */
-    protected $zaloStream;
+    protected $VoipStream;
 
     /**
-     * @param ZaloStream|null Procedural stream wrapper as object.
+     * @param VoipStream|null Procedural stream wrapper as object.
      */
-    public function __construct(ZaloStream $zaloStream = null)
+    public function __construct(VoipStream $VoipStream = null)
     {
-        $this->zaloStream = $zaloStream ?: new ZaloStream();
+        $this->VoipStream = $VoipStream ?: new VoipStream();
     }
 
     /**
@@ -51,12 +51,12 @@ class ZaloStreamHttpClient implements ZaloHttpClientInterface
             ],
         ];
 
-        $this->zaloStream->streamContextCreate($options);
-        $rawBody = $this->zaloStream->fileGetContents($url);
-        $rawHeaders = $this->zaloStream->getResponseHeaders();
+        $this->VoipStream->streamContextCreate($options);
+        $rawBody = $this->VoipStream->fileGetContents($url);
+        $rawHeaders = $this->VoipStream->getResponseHeaders();
 
         if ($rawBody === false || empty($rawHeaders)) {
-            throw new ZaloSDKException('Stream returned an empty response', 660);
+            throw new VoipSDKException('Stream returned an empty response', 660);
         }
 
         $rawHeaders = implode("\r\n", $rawHeaders);

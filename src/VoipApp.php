@@ -1,20 +1,20 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo;
+namespace Voip;
 
-use Zalo\Authentication\AccessToken;
-use Zalo\Exceptions\ZaloSDKException;
+use Voip\Authentication\AccessToken;
+use Voip\Exceptions\VoipSDKException;
 
 /**
- * Class ZaloApp
+ * Class VoipApp
  *
- * @package Zalo
+ * @package Voip
  */
-class ZaloApp implements \Serializable
+class VoipApp implements \Serializable
 {
     /**
      * @var string The app ID.
@@ -35,14 +35,14 @@ class ZaloApp implements \Serializable
      * @param string $id
      * @param string $secret
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function __construct($id, $secret, $url)
     {
         if (!is_string($id)
           // Keeping this for BC. Integers greater than PHP_INT_MAX will make is_int() return false
           && !is_int($id)) {
-            throw new ZaloSDKException('The "app_id" must be formatted as a string since many app ID\'s are greater than PHP_INT_MAX on some systems.');
+            throw new VoipSDKException('The "app_id" must be formatted as a string since many app ID\'s are greater than PHP_INT_MAX on some systems.');
         }
         // We cast as a string in case a valid int was set on a 64-bit system and this is unserialised on a 32-bit system
         $this->id = (string) $id;
@@ -91,7 +91,7 @@ class ZaloApp implements \Serializable
     }
 
     /**
-     * Serializes the ZaloApp entity as a string.
+     * Serializes the VoipApp entity as a string.
      *
      * @return string
      */
@@ -101,7 +101,7 @@ class ZaloApp implements \Serializable
     }
 
     /**
-     * Unserializes a string as a ZaloApp entity.
+     * Unserializes a string as a VoipApp entity.
      *
      * @param string $serialized
      */

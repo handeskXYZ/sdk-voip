@@ -1,38 +1,38 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo;
+namespace Voip;
 
-use Zalo\Authentication\AccessToken;
-use Zalo\Authentication\OAuth2Client;
-use Zalo\Authentication\ZaloRedirectLoginHelper;
-use Zalo\Url\UrlDetectionInterface;
-use Zalo\Url\ZaloUrlDetectionHandler;
-use Zalo\HttpClients\HttpClientsFactory;
-use Zalo\Exceptions\ZaloSDKException;
-use Zalo\ZaloClient;
-use Zalo\ZaloRequest;
+use Voip\Authentication\AccessToken;
+use Voip\Authentication\OAuth2Client;
+use Voip\Authentication\VoipRedirectLoginHelper;
+use Voip\Url\UrlDetectionInterface;
+use Voip\Url\VoipUrlDetectionHandler;
+use Voip\HttpClients\HttpClientsFactory;
+use Voip\Exceptions\VoipSDKException;
+use Voip\VoipClient;
+use Voip\VoipRequest;
 
 /**
- * Class Zalo
+ * Class Voip
  *
- * @package Zalo
+ * @package Voip
  */
-class Zalo
+class Voip
 {
     /**
-     * @const string Version number of the Zalo PHP SDK.
+     * @const string Version number of the Voip PHP SDK.
      */
     const VERSION = '2.0.0';
     /**
-     * @var ZaloClient The Zalo client service.
+     * @var VoipClient The Voip client service.
      */
     protected $client;
     /**
-     * @var ZaloApp The ZaloApp entity.
+     * @var VoipApp The VoipApp entity.
      */
     protected $app;
     /**
@@ -44,7 +44,7 @@ class Zalo
      */
     protected $defaultAccessToken;
     /**
-     * @var ZaloResponse|ZaloBatchResponse|null Stores the last request made to Graph.
+     * @var VoipResponse|VoipBatchResponse|null Stores the last request made to Graph.
      */
     protected $lastResponse;
     /**
@@ -53,11 +53,11 @@ class Zalo
     protected $oAuth2Client;
     
     /**
-     * Instantiates a new Zalo super-class object.
+     * Instantiates a new Voip super-class object.
      *
      * @param array $config
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function __construct(array $config = [])
     {
@@ -66,12 +66,12 @@ class Zalo
             'http_client_handler' => 'curl',
             'url_detection_handler' => null,
         ], $config);
-        $this->client = new ZaloClient(
+        $this->client = new VoipClient(
             HttpClientsFactory::createHttpClient($config['http_client_handler']),
             $config['enable_beta_mode']
         );
-        $this->app = new ZaloApp($config['app_id'], $config['app_secret'], $config['callback_url']);
-        $this->setUrlDetectionHandler($config['url_detection_handler'] ?: new ZaloUrlDetectionHandler());
+        $this->app = new VoipApp($config['app_id'], $config['app_secret'], $config['callback_url']);
+        $this->setUrlDetectionHandler($config['url_detection_handler'] ?: new VoipUrlDetectionHandler());
         if (isset($config['default_access_token'])) {
             $this->setDefaultAccessToken($config['default_access_token']);
         }
@@ -79,7 +79,7 @@ class Zalo
     /**
      * Returns the last response returned from Graph.
      *
-     * @return ZaloResponse|ZaloBatchResponse|null
+     * @return VoipResponse|VoipBatchResponse|null
      */
     public function getLastResponse()
     {
@@ -129,7 +129,7 @@ class Zalo
             $this->defaultAccessToken = $accessToken;
             return;
         }
-        throw new \InvalidArgumentException('The default access token must be of type "string" or Zalo\AccessToken');
+        throw new \InvalidArgumentException('The default access token must be of type "string" or Voip\AccessToken');
     }
     
     /**
@@ -139,9 +139,9 @@ class Zalo
      * @param AccessToken|string|null $accessToken
      * @param string|null             $eTag
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function get($url, $accessToken = null, array $params = [], $eTag = null)
     {   
@@ -161,9 +161,9 @@ class Zalo
      * @param array                   $params
      * @param string|null             $eTag
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function post($url, $accessToken = null, $params = [] , $eTag = null)
     {
@@ -183,9 +183,9 @@ class Zalo
      * @param AccessToken|string|null $accessToken
      * @param string|null             $eTag
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function uploadVideo($url, array $params = [], $accessToken = null, $eTag = null)
     {
@@ -205,9 +205,9 @@ class Zalo
      * @param AccessToken|string|null $accessToken
      * @param string|null             $eTag
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function delete($url, array $params = [], $accessToken = null, $eTag = null)
     {
@@ -228,9 +228,9 @@ class Zalo
      * @param AccessToken|string|null $accessToken
      * @param string|null             $eTag
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function sendRequest($method, $url, array $params = [], $accessToken = null, $eTag = null)
     {
@@ -246,9 +246,9 @@ class Zalo
      * @param AccessToken|string|null $accessToken
      * @param string|null             $eTag
      *
-     * @return ZaloResponse
+     * @return VoipResponse
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function sendRequestUploadVideo($method, $url, array $params = [], $accessToken = null, $eTag = null)
     {
@@ -256,7 +256,7 @@ class Zalo
         return $this->lastResponse = $this->client->sendRequestUploadVideo($request);
     }
     /**
-     * Instantiates a new ZaloRequest entity.
+     * Instantiates a new VoipRequest entity.
      *
      * @param string                  $method
      * @param string                  $url
@@ -264,13 +264,13 @@ class Zalo
      * @param AccessToken|string|null $accessToken
      * @param string|null             $eTag
      *
-     * @return ZaloRequest
+     * @return VoipRequest
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function request($method, $url, array $params = [], $accessToken = null, $eTag = null)
     {
-        $request =  new ZaloRequest(
+        $request =  new VoipRequest(
             $accessToken,
             $method,
             $url,
@@ -280,18 +280,18 @@ class Zalo
         return $request;
     }
     /**
-     * Returns the ZaloApp entity.
+     * Returns the VoipApp entity.
      *
-     * @return ZaloApp
+     * @return VoipApp
      */
     public function getApp()
     {
         return $this->app;
     }
     /**
-     * Returns the ZaloClient service.
+     * Returns the VoipClient service.
      *
-     * @return ZaloClient
+     * @return VoipClient
      */
     public function getClient()
     {
@@ -314,11 +314,11 @@ class Zalo
     /**
      * Returns Login helper.
      *
-     * @return ZaloRedirectLoginHelper
+     * @return VoipRedirectLoginHelper
      */
     public function getRedirectLoginHelper()
     {
-        return new ZaloRedirectLoginHelper(
+        return new VoipRedirectLoginHelper(
             $this->getOAuth2Client(),
             $this->urlDetectionHandler
         );

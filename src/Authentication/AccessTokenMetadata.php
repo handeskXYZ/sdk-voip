@@ -1,20 +1,19 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\Authentication;
+namespace Voip\Authentication;
 
-use Zalo\Exceptions\ZaloSDKException;
+use Voip\Exceptions\VoipSDKException;
 
 /**
  * Class AccessTokenMetadata
  *
  * Represents metadata from an access token.
  *
- * @package Zalo
- * @see     https://developers.zalo.me/docs/
+ * @package Voip
  */
 class AccessTokenMetadata
 {
@@ -35,12 +34,12 @@ class AccessTokenMetadata
     /**
      * @param array $metadata
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function __construct(array $metadata)
     {
         if (!isset($metadata['data'])) {
-            throw new ZaloSDKException('Unexpected debug token response data.', 401);
+            throw new VoipSDKException('Unexpected debug token response data.', 401);
         }
 
         $this->metadata = $metadata['data'];
@@ -216,7 +215,7 @@ class AccessTokenMetadata
      * Note that the issued_at field is not returned
      * for short-lived access tokens.
      *
-     * @see https://developers.zalo.me/docs/
+     * @see https://developers.Voip.me/docs/
      *
      * @return \DateTime|null
      */
@@ -304,12 +303,12 @@ class AccessTokenMetadata
      *
      * @param string $appId
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function validateAppId($appId)
     {
         if ($this->getAppId() !== $appId) {
-            throw new ZaloSDKException('Access token metadata contains unexpected app ID.', 401);
+            throw new VoipSDKException('Access token metadata contains unexpected app ID.', 401);
         }
     }
 
@@ -319,19 +318,19 @@ class AccessTokenMetadata
      *
      * @param string $userId
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function validateUserId($userId)
     {
         if ($this->getUserId() !== $userId) {
-            throw new ZaloSDKException('Access token metadata contains unexpected user ID.', 401);
+            throw new VoipSDKException('Access token metadata contains unexpected user ID.', 401);
         }
     }
 
     /**
      * Ensures the access token has not expired yet.
      *
-     * @throws ZaloSDKException
+     * @throws VoipSDKException
      */
     public function validateExpiration()
     {
@@ -340,7 +339,7 @@ class AccessTokenMetadata
         }
 
         if ($this->getExpiresAt()->getTimestamp() < time()) {
-            throw new ZaloSDKException('Inspection of access token metadata shows that the access token has expired.', 401);
+            throw new VoipSDKException('Inspection of access token metadata shows that the access token has expired.', 401);
         }
     }
 

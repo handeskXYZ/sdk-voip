@@ -1,15 +1,15 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\FileUpload;
+namespace Voip\FileUpload;
 
 /**
  * Class Mimetypes
  *
- * @package Zalo\FileUpload
+ * @package Voip\FileUpload
  */
 class Mimetypes
 {

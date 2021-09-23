@@ -1,17 +1,17 @@
 <?php
 /**
- * Zalo © 2019
+ * Voip © 2019
  *
  */
 
-namespace Zalo\HttpClients;
+namespace Voip\HttpClients;
 
-use Zalo\HttpClients\ZaloCurlHttpClient;
+use Voip\HttpClients\VoipCurlHttpClient;
 
 /**
  * Class HttpClientsFactory
  *
- * @package Zalo
+ * @package Voip
  */
 class HttpClientsFactory {
 
@@ -22,19 +22,19 @@ class HttpClientsFactory {
     /**
      * HTTP client generation.
      *
-     * @param ZaloHttpClientInterface|Client|string|null $handler
+     * @param VoipHttpClientInterface|Client|string|null $handler
      *
      * @throws Exception               
-     * @throws InvalidArgumentException If the http client handler isn't "curl", "stream", or an instance of Zalo\HttpClients\ZaloHttpClientInterface.
+     * @throws InvalidArgumentException If the http client handler isn't "curl", "stream", or an instance of Voip\HttpClients\VoipHttpClientInterface.
      *
-     * @return ZaloHttpClientInterface
+     * @return VoipHttpClientInterface
      */
     public static function createHttpClient($handler) {
         if (!$handler) {
             return self::detectDefaultClient();
         }
 
-        if ($handler instanceof ZaloHttpClientInterface) {
+        if ($handler instanceof VoipHttpClientInterface) {
             return $handler;
         }
 
@@ -43,19 +43,19 @@ class HttpClientsFactory {
                 throw new Exception('The cURL extension must be loaded in order to use the "curl" handler.');
             }
 
-            return new ZaloCurlHttpClient();
+            return new VoipCurlHttpClient();
         }
 
-        throw new InvalidArgumentException('The http client handler must be set to "curl" be an instance of Zalo\HttpClients\ZaloHttpClientInterface');
+        throw new InvalidArgumentException('The http client handler must be set to "curl" be an instance of Voip\HttpClients\VoipHttpClientInterface');
     }
 
     /**
      * Detect default HTTP client.
      *
-     * @return ZaloHttpClientInterface
+     * @return VoipHttpClientInterface
      */
     private static function detectDefaultClient() {
-        return new ZaloCurlHttpClient();
+        return new VoipCurlHttpClient();
     }
 
 }
