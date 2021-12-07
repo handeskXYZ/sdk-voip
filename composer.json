@@ -4,17 +4,22 @@
 	"keywords": ["voipsdk","voip","sdk"],
 	"license": "MIT",
 	"type": "library",
+	"homepage": "https://docs-sdk.voip24h.vn/",
 	"version": "1.0.0",
+	"authors": [
+			{
+					"name": "VOIP24h",
+					"email": "support@voip24h.vn",
+					"homepage": "https://voip24h.vn",
+					"role": "Developers"
+			}
+	],
+	"require": {
+		"php": ">=5.4.0"
+	},
 	"autoload": {
 			"psr-4": {
 					"Voip\\": "src/"
 			}
-	},
-	"authors": [
-			{
-					"name": "H A N D E S K",
-					"email": "me@handesk.xyz"
-			}
-	],
-	"require": {}
+	}
 }
