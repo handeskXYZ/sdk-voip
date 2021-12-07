@@ -1,21 +1,21 @@
 {
-    "name": "voip/sdk",
-		"description":"sdk for voip24h developers",
-		"keywords": ["voip24hsdk", "voip", "handeskXYZ", "voip24h", "sdk"],
-		"license": "MIT",
-		"type": "library",
-    "autoload": {
-        "psr-4": {
-            "Voip\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "H A N D E S K",
-            "email": "91239621+handeskXYZ@users.noreply.github.com"
-        }
-    ],
-    "require": {
-			"php": ">=5.4.0"
-		}
+	"name": "voip/sdk",
+	"description":"sdk for voip24h developers",
+	"keywords": ["voipsdk", "H A N D E S K", "voip", "handeskXYZ", "voip24h", "sdk"],
+	"license": "MIT",
+	"type": "library",
+	"autoload": {
+			"psr-4": {
+					"Voip\\": "src/"
+			}
+	},
+	"authors": [
+			{
+					"name": "H A N D E S K",
+					"email": "me@handesk.xyz"
+			}
+	],
+	"require": {
+		"php": ">=5.4.0"
+	}
 }
