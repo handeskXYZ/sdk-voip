@@ -1,0 +1,15 @@
+{
+    "name": "voip/sdk",
+    "autoload": {
+        "psr-4": {
+            "Voip\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "H A N D E S K",
+            "email": "91239621+handeskXYZ@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
