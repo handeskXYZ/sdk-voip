@@ -1,12 +1,10 @@
 {
 	"name": "voip/sdk",
 	"description":"sdk for voip24h developers",
-	"keywords": ["voipsdk", "H A N D E S K", "voip", "handeskXYZ", "voip24h", "sdk"],
+	"keywords": ["voipsdk","voip","sdk"],
 	"license": "MIT",
 	"type": "library",
 	"version": "master",
-	"tag": "releases",
-	"minimum-stability": "stable",
 	"autoload": {
 			"psr-4": {
 					"Voip\\": "src/"
@@ -18,7 +16,5 @@
 					"email": "me@handesk.xyz"
 			}
 	],
-	"require": {
-		"php": ">=5.4.0"
-	}
+	"require": {}
 }
