@@ -6,7 +6,7 @@
 	"type": "library",
 	"version": "master",
 	"tag": "releases",
-	"minimum-stability":"stable",
+	"minimum-stability": "stable",
 	"autoload": {
 			"psr-4": {
 					"Voip\\": "src/"
