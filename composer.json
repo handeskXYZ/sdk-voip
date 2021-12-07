@@ -4,7 +4,9 @@
 	"keywords": ["voipsdk", "H A N D E S K", "voip", "handeskXYZ", "voip24h", "sdk"],
 	"license": "MIT",
 	"type": "library",
-	"version": "v.1.0",
+	"version": "master",
+	"tag": "releases",
+	"minimum-stability":"stable",
 	"autoload": {
 			"psr-4": {
 					"Voip\\": "src/"
