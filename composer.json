@@ -3,7 +3,7 @@
 		"description":"sdk for voip24h developers",
 		"keywords": ["voip24hsdk", "voip", "handeskXYZ", "voip24h", "sdk"],
 		"license": "MIT",
-		"type": "project",
+		"type": "library",
     "autoload": {
         "psr-4": {
             "Voip\\": "src/"
