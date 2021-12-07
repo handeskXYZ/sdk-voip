@@ -1,2 +1,1 @@
-# sdk-test
-
+# sdk for voip24h developers
